@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>书签导航 - 个人书签管理</title>
+    <link rel="stylesheet" href="/assets/css/main-compact.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="top-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <h1 class="site-title">📚 书签导航</h1>
+                <div class="nav-stats">
+                    <span id="datetime" class="nav-time"></span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="搜索书签..." class="search-input">
+                    <button type="button" onclick="searchBookmarks()" class="search-btn">🔍</button>
+                </div>
+                <div class="nav-actions">
+                    <button type="button" onclick="showApiDocs()" class="nav-btn" title="API文档">📋</button>
+                    <button type="button" onclick="window.location.href='/admin'" class="nav-btn" title="管理后台">⚙️</button>
+                    <button type="button" onclick="logout()" class="nav-btn logout-btn" title="退出登录">🚪</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 分类筛选栏 -->
+    <nav class="category-nav">
+        <div class="category-container">
+            <div class="category-filters" id="categoryFilters">
+                <button type="button" class="category-filter-btn active" data-category="all">📋 全部</button>
+                <!-- 动态生成的分类按钮将插入这里 -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <div class="content-container">
+            <!-- 书签容器 -->
+            <div id="bookmarkContainer" class="bookmark-container">
+                <div class="loading">⏳ 正在加载书签...</div>
+            </div>
+
+            <!-- 分页控件 -->
+            <div class="pagination-section hidden" id="paginationSection">
+                <div class="pagination-info">
+                    <span id="paginationInfo">显示 1-50 / 共 0 条</span>
+                    <select id="pageSize" class="page-size-select">
+                        <option value="20">20条/页</option>
+                        <option value="50" selected>50条/页</option>
+                        <option value="100">100条/页</option>
+                    </select>
+                </div>
+                <div class="pagination-controls">
+                    <button type="button" id="prevPage" class="pagination-btn" disabled>‹ 上一页</button>
+                    <div class="pagination-numbers" id="paginationNumbers">
+                        <!-- 动态生成的页码按钮 -->
+                    </div>
+                    <button type="button" id="nextPage" class="pagination-btn">下一页 ›</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <p>&copy; 2024 书签管理系统 | 
+                   <a href="/admin" class="footer-link">管理后台</a> | 
+                   <a href="javascript:showApiDocs()" class="footer-link">API文档</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

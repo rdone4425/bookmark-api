@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - 书签管理系统</title>
+    <link rel="stylesheet" href="/assets/css/admin.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="admin-header">
+        <div class="header-container">
+            <div class="header-left">
+                <h1 class="admin-title">⚙️ 管理后台</h1>
+            </div>
+            <div class="header-right">
+                <button type="button" id="back-to-frontend" class="header-btn" title="返回前台">
+                    🏠 返回前台
+                </button>
+                <button type="button" id="logout-btn" class="header-btn logout-btn" title="退出登录">
+                    🚪 退出登录
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="admin-main">
+        <!-- 侧边导航 -->
+        <nav class="admin-sidebar">
+            <div class="sidebar-nav">
+                <button type="button" class="nav-btn active" data-tab="dashboard">
+                    📊 仪表板
+                </button>
+                <button type="button" class="nav-btn" data-tab="bookmarks">
+                    📚 书签管理
+                </button>
+                <button type="button" class="nav-btn" data-tab="categories">
+                    🏷️ 分类管理
+                </button>
+                <button type="button" class="nav-btn" data-tab="database">
+                    🗄️ 数据库管理
+                </button>
+                <button type="button" class="nav-btn" data-tab="settings">
+                    ⚙️ 系统设置
+                </button>
+            </div>
+        </nav>
+
+        <!-- 内容区域 -->
+        <div class="admin-content">
+            <!-- 仪表板 -->
+            <div id="dashboard" class="tab-content active">
+                <div class="dashboard-header">
+                    <h2>📊 系统概览</h2>
+                    <p>书签管理系统运行状态监控</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- 统计卡片 -->
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="total-count">-</div>
+                            <div class="stat-label">总书签数</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="today-count">-</div>
+                            <div class="stat-label">今日新增</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🏷️</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="category-count">-</div>
+                            <div class="stat-label">分类数量</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" id="api-status-icon">🔄</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="api-status-text">检查中</div>
+                            <div class="stat-label">API状态</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 系统信息 -->
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>📋 系统信息</h3>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <span class="info-label">部署时间:</span>
+                                <span class="info-value" id="deploy-time">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">最后更新:</span>
+                                <span class="info-value" id="last-update">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">数据库状态:</span>
+                                <span class="info-value" id="db-status">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>🔧 快速操作</h3>
+                        <div class="quick-actions">
+                            <button type="button" class="action-btn" onclick="switchToTab('bookmarks')">
+                                📚 管理书签
+                            </button>
+                            <button type="button" class="action-btn" onclick="switchToTab('categories')">
+                                🏷️ 管理分类
+                            </button>
+                            <button type="button" class="action-btn" onclick="switchToTab('database')">
+                                🗄️ 数据库操作
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 书签管理 -->
+            <div id="bookmarks" class="tab-content">
+                <div class="content-header">
+                    <h2>📚 书签管理</h2>
+                    <p>管理和编辑书签数据</p>
+                </div>
+                <div class="placeholder-content">
+                    <p>📝 书签管理功能开发中...</p>
+                </div>
+            </div>
+
+            <!-- 分类管理 -->
+            <div id="categories" class="tab-content">
+                <div class="content-header">
+                    <h2>🏷️ 分类管理</h2>
+                    <p>管理书签分类和标签</p>
+                </div>
+                <div class="placeholder-content">
+                    <p>📝 分类管理功能开发中...</p>
+                </div>
+            </div>
+
+            <!-- 数据库管理 -->
+            <div id="database" class="tab-content">
+                <div class="content-header">
+                    <h2>🗄️ 数据库管理</h2>
+                    <p>数据库操作和维护</p>
+                </div>
+                <div class="placeholder-content">
+                    <p>📝 数据库管理功能开发中...</p>
+                </div>
+            </div>
+
+            <!-- 系统设置 -->
+            <div id="settings" class="tab-content">
+                <div class="content-header">
+                    <h2>⚙️ 系统设置</h2>
+                    <p>系统配置和参数设置</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>🔗 API配置</h3>
+                        <div class="setting-item">
+                            <label for="api-url-setting" class="setting-label">API地址:</label>
+                            <input type="text" id="api-url-setting" class="setting-input" readonly>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>🔒 安全设置</h3>
+                        <div class="setting-item">
+                            <label class="setting-label">登录状态:</label>
+                            <span class="setting-value">已登录</span>
+                        </div>
+                        <div class="setting-item">
+                            <button type="button" class="setting-btn">修改密码</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/assets/js/admin.js"></script>
+</body>
+</html>

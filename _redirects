@@ -1,0 +1,33 @@
+# Cloudflare Pages 重定向配置
+
+# 主要页面重定向 (简化URL)
+/               /public/index.html      200
+/admin          /public/admin.html      200
+/login          /public/login.html      200
+/setup          /public/setup.html      200
+
+# 带扩展名的访问也重定向到public目录
+/index.html     /public/index.html      200
+/admin.html     /public/admin.html      200
+/login.html     /public/login.html      200
+/setup.html     /public/setup.html      200
+
+# 静态资源保持原路径
+/assets/*       /assets/:splat          200
+
+# API路径保持不变
+/api/*          /functions/api/:splat   200
+
+# 兼容性重定向 (如果之前有其他路径)
+/dashboard      /public/admin.html      301
+/signin         /public/login.html      301
+/initialize     /public/setup.html      301
+
+# 错误页面
+/404            /public/index.html      404
+
+# 强制HTTPS (如果需要)
+http://bookmark-api.pages.dev/*  https://bookmark-api.pages.dev/:splat  301!
+
+# SPA路由支持 (最后的fallback)
+/*              /public/index.html      200

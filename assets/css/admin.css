@@ -1,0 +1,114 @@
+/* 管理页面基础样式 */
+.admin-page {
+    background: #f5f7fa;
+}
+
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 头部样式 */
+.admin-header {
+    background: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.user-panel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-nav {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tab-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    color: #666;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.tab-btn.active {
+    background: #3498db;
+    color: white;
+}
+
+/* 主内容区域 */
+.admin-content {
+    flex: 1;
+    padding: 2rem;
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* 工具栏 */
+.toolbar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-box {
+    flex: 1;
+}
+
+.filters {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* 统计卡片 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .admin-header {
+        padding: 1rem;
+    }
+    
+    .admin-content {
+        padding: 1rem;
+    }
+    
+    .toolbar {
+        flex-direction: column;
+    }
+    
+    .filters {
+        flex-wrap: wrap;
+    }
+}

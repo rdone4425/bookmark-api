@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统初始化 - 书签管理系统</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .setup-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .setup-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .setup-header h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .setup-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .step-container {
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .step.completed {
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .step.error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .step.loading {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .step-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .step-icon.pending {
+            background: #6c757d;
+            color: white;
+        }
+
+        .step-icon.loading {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .step-icon.completed {
+            background: #28a745;
+            color: white;
+        }
+
+        .step-icon.error {
+            background: #dc3545;
+            color: white;
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .step-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .step-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+
+        .btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #28a745;
+            transition: width 0.3s ease;
+        }
+
+        .status-message {
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .final-actions {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .final-actions .btn {
+            margin: 0 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <div class="setup-header">
+            <h1>⚙️ 系统初始化</h1>
+            <p>欢迎使用书签管理系统！请按照以下步骤完成初始化设置。</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+
+        <div class="step-container">
+            <!-- 步骤1: 检查数据库绑定 -->
+            <div class="step" id="step1">
+                <div class="step-header">
+                    <div class="step-icon pending" id="step1-icon">1</div>
+                    <div class="step-title">检查数据库绑定</div>
+                </div>
+                <div class="step-description">
+                    验证Cloudflare D1数据库是否正确绑定到Pages项目。
+                </div>
+                <div class="step-actions">
+                    <button class="btn btn-primary" onclick="checkDatabaseBinding()">开始检查</button>
+                </div>
+            </div>
+
+            <!-- 步骤2: 初始化数据库表 -->
+            <div class="step" id="step2">
+                <div class="step-header">
+                    <div class="step-icon pending" id="step2-icon">2</div>
+                    <div class="step-title">初始化数据库表</div>
+                </div>
+                <div class="step-description">
+                    创建书签管理系统所需的数据库表结构。
+                </div>
+                <div class="step-actions">
+                    <button class="btn btn-primary" onclick="initDatabase()" disabled>初始化数据库</button>
+                </div>
+            </div>
+
+            <!-- 步骤3: 创建管理员账户 -->
+            <div class="step" id="step3">
+                <div class="step-header">
+                    <div class="step-icon pending" id="step3-icon">3</div>
+                    <div class="step-title">创建管理员账户</div>
+                </div>
+                <div class="step-description">
+                    创建默认管理员账户 (admin/admin123)。
+                </div>
+                <div class="step-actions">
+                    <button class="btn btn-primary" onclick="createAdminAccount()" disabled>创建账户</button>
+                </div>
+            </div>
+
+            <!-- 步骤4: 创建示例数据 -->
+            <div class="step" id="step4">
+                <div class="step-header">
+                    <div class="step-icon pending" id="step4-icon">4</div>
+                    <div class="step-title">创建示例数据 (可选)</div>
+                </div>
+                <div class="step-description">
+                    创建一些示例书签数据，帮助您快速了解系统功能。
+                </div>
+                <div class="step-actions">
+                    <button class="btn btn-primary" onclick="createSampleData()" disabled>创建示例数据</button>
+                    <button class="btn btn-success" onclick="skipSampleData()" disabled>跳过</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="statusMessage" class="status-message hidden"></div>
+
+        <div class="final-actions hidden" id="finalActions">
+            <h3>🎉 初始化完成！</h3>
+            <p>系统已成功初始化，您现在可以开始使用书签管理系统了。</p>
+            <br>
+            <button class="btn btn-success" onclick="goToLogin()">前往登录</button>
+            <button class="btn btn-primary" onclick="goToHome()">访问主页</button>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let totalSteps = 4;
+
+        function updateProgress() {
+            const progress = ((currentStep - 1) / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function setStepStatus(stepNum, status, message = '') {
+            const step = document.getElementById(`step${stepNum}`);
+            const icon = document.getElementById(`step${stepNum}-icon`);
+            
+            step.classList.remove('completed', 'error', 'loading');
+            icon.classList.remove('pending', 'loading', 'completed', 'error');
+            
+            switch (status) {
+                case 'loading':
+                    step.classList.add('loading');
+                    icon.classList.add('loading');
+                    icon.innerHTML = '<div class="spinner"></div>';
+                    break;
+                case 'completed':
+                    step.classList.add('completed');
+                    icon.classList.add('completed');
+                    icon.textContent = '✓';
+                    break;
+                case 'error':
+                    step.classList.add('error');
+                    icon.classList.add('error');
+                    icon.textContent = '✗';
+                    break;
+                default:
+                    icon.classList.add('pending');
+                    icon.textContent = stepNum;
+            }
+            
+            if (message) {
+                showStatusMessage(message, status === 'error' ? 'error' : 'info');
+            }
+        }
+
+        function showStatusMessage(message, type = 'info') {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.textContent = message;
+            statusDiv.classList.remove('hidden');
+        }
+
+        function enableNextStep() {
+            currentStep++;
+            updateProgress();
+            
+            if (currentStep <= totalSteps) {
+                const nextStepButtons = document.querySelectorAll(`#step${currentStep} button`);
+                nextStepButtons.forEach(btn => btn.disabled = false);
+            }
+            
+            if (currentStep > totalSteps) {
+                document.getElementById('finalActions').classList.remove('hidden');
+            }
+        }
+
+        async function checkDatabaseBinding() {
+            setStepStatus(1, 'loading', '正在检查数据库绑定...');
+            
+            try {
+                const response = await fetch('/api/init');
+                const data = await response.json();
+                
+                if (data.success && data.checks.database_binding) {
+                    setStepStatus(1, 'completed', '数据库绑定检查通过');
+                    enableNextStep();
+                } else {
+                    setStepStatus(1, 'error', data.message || '数据库绑定检查失败');
+                }
+            } catch (error) {
+                setStepStatus(1, 'error', '检查失败: ' + error.message);
+            }
+        }
+
+        async function initDatabase() {
+            setStepStatus(2, 'loading', '正在初始化数据库表...');
+            
+            try {
+                const response = await fetch('/api/init', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'init_database' })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    setStepStatus(2, 'completed', '数据库表创建成功');
+                    enableNextStep();
+                } else {
+                    setStepStatus(2, 'error', data.message || '数据库初始化失败');
+                }
+            } catch (error) {
+                setStepStatus(2, 'error', '初始化失败: ' + error.message);
+            }
+        }
+
+        async function createAdminAccount() {
+            setStepStatus(3, 'loading', '正在创建管理员账户...');
+            
+            try {
+                const response = await fetch('/api/init', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'create_admin' })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    setStepStatus(3, 'completed', '管理员账户创建成功 (admin/admin123)');
+                    enableNextStep();
+                } else {
+                    setStepStatus(3, 'error', data.message || '管理员账户创建失败');
+                }
+            } catch (error) {
+                setStepStatus(3, 'error', '创建失败: ' + error.message);
+            }
+        }
+
+        async function createSampleData() {
+            setStepStatus(4, 'loading', '正在创建示例数据...');
+            
+            try {
+                const response = await fetch('/api/init', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'create_sample_data' })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    setStepStatus(4, 'completed', '示例数据创建成功');
+                    enableNextStep();
+                } else {
+                    setStepStatus(4, 'error', data.message || '示例数据创建失败');
+                }
+            } catch (error) {
+                setStepStatus(4, 'error', '创建失败: ' + error.message);
+            }
+        }
+
+        function skipSampleData() {
+            setStepStatus(4, 'completed', '已跳过示例数据创建');
+            enableNextStep();
+        }
+
+        function goToLogin() {
+            window.location.href = '/login';
+        }
+
+        function goToHome() {
+            window.location.href = '/';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "name": "bookmark-manager",
+  "version": "1.0.0",
+  "description": "书签管理系统 - 支持Cloudflare Pages和本地测试",
+  "main": "local-server-simple.js",
+  "scripts": {
+    "start": "node local-server-simple.js",
+    "dev": "node local-server-simple.js",
+    "start:full": "node local-server.js",
+    "test": "python -m http.server 8000",
+    "wrangler:dev": "wrangler pages dev . --d1 DB=bookmark-local-test",
+    "wrangler:deploy": "wrangler pages deploy ."
+  },
+  "keywords": [
+    "bookmark",
+    "manager",
+    "cloudflare",
+    "pages",
+    "d1",
+    "workers"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "optionalDependencies": {
+    "sqlite3": "^5.1.6",
+    "bcrypt": "^5.1.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

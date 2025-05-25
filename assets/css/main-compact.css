@@ -1,0 +1,503 @@
+/* 紧凑首页样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.4;
+    color: #333;
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* 紧凑顶部栏 */
+.top-bar {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0.4rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.top-bar-left .current-time {
+    color: #666;
+    font-weight: 500;
+}
+
+.top-bar-right {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.top-link {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 500;
+}
+
+.top-link:hover {
+    color: #1a73e8;
+}
+
+/* 紧凑标题和搜索 */
+.header-section {
+    background: #fff;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.main-title {
+    font-size: 1.5rem;
+    color: #1a73e8;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.search-container {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+.search-btn {
+    padding: 0.6rem 1rem;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.search-btn:hover {
+    background: #1557b0;
+}
+
+/* 紧凑快捷导航 */
+.quick-nav {
+    background: #fff;
+    padding: 0.8rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.quick-link {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    margin: 0 0.3rem 0.3rem 0;
+    background: #f8f9fa;
+    color: #333;
+    text-decoration: none;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.quick-link:hover {
+    background: #1a73e8;
+    color: white;
+    border-color: #1a73e8;
+    transform: translateY(-1px);
+}
+
+/* 紧凑分类筛选 */
+.category-filter-section {
+    background: #fff;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.category-filter-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-filter-btn {
+    padding: 0.3rem 0.8rem;
+    background: #f8f9fa;
+    color: #666;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.category-filter-btn:hover {
+    background: #e3f2fd;
+    border-color: #1a73e8;
+    color: #1a73e8;
+}
+
+.category-filter-btn.active {
+    background: #1a73e8;
+    color: white;
+    border-color: #1a73e8;
+}
+
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+/* 紧凑书签区域 */
+.bookmark-categories {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.category-section {
+    margin-bottom: 1.5rem;
+    background: #fff;
+    border-radius: 6px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.category-title {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid #1a73e8;
+    font-weight: 600;
+}
+
+.bookmark-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.6rem;
+}
+
+.bookmark-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.7rem;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s;
+    gap: 0.5rem;
+}
+
+.bookmark-item:hover {
+    background: #e3f2fd;
+    border-color: #1a73e8;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(26, 115, 232, 0.2);
+}
+
+.bookmark-favicon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+.bookmark-title {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 状态消息 */
+.loading, .empty-message, .error-message {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.error-message {
+    color: #e74c3c;
+}
+
+.empty-message {
+    color: #95a5a6;
+}
+
+/* 紧凑分页 */
+.pagination-section {
+    background: #fff;
+    padding: 0.8rem 1rem;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 1rem;
+}
+
+.pagination-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.pagination-info {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.pagination-btn {
+    padding: 0.4rem 0.8rem;
+    background: #f8f9fa;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #e3f2fd;
+    border-color: #1a73e8;
+    color: #1a73e8;
+}
+
+.pagination-btn:disabled {
+    background: #f5f5f5;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination-numbers {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.pagination-number {
+    padding: 0.4rem 0.6rem;
+    background: #f8f9fa;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    min-width: 32px;
+    text-align: center;
+}
+
+.pagination-number:hover {
+    background: #e3f2fd;
+    border-color: #1a73e8;
+    color: #1a73e8;
+}
+
+.pagination-number.active {
+    background: #1a73e8;
+    color: white;
+    border-color: #1a73e8;
+}
+
+.pagination-size {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.page-size-select {
+    padding: 0.3rem 0.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    background: #fff;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+/* 紧凑页脚 */
+.footer {
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    padding: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.footer-links {
+    color: #666;
+    font-size: 0.75rem;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+.footer-links a:hover {
+    color: #1a73e8;
+}
+
+.separator {
+    margin: 0 0.5rem;
+    color: #ccc;
+}
+
+.copyright {
+    color: #999;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .search-container {
+        margin: 0 0.5rem;
+    }
+
+    .bookmark-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-nav {
+        padding: 0.6rem 0.5rem;
+    }
+
+    .bookmark-categories {
+        padding: 0.8rem 0.5rem;
+    }
+
+    .category-section {
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .category-filter-section {
+        padding: 0.5rem;
+    }
+
+    .category-filter-container {
+        justify-content: center;
+    }
+
+    .category-filter-btn {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.6rem;
+    }
+
+    .pagination-container {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .pagination-controls {
+        order: 1;
+    }
+
+    .pagination-info {
+        order: 2;
+        text-align: center;
+    }
+
+    .pagination-size {
+        order: 3;
+        justify-content: center;
+    }
+
+    .pagination-numbers {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .pagination-number {
+        padding: 0.3rem 0.5rem;
+        min-width: 28px;
+        font-size: 0.75rem;
+    }
+
+    .pagination-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .top-bar {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .top-bar-right {
+        gap: 0.5rem;
+    }
+
+    .header-section {
+        padding: 0.8rem 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bookmark-item {
+        padding: 0.4rem 0.5rem;
+    }
+
+    .bookmark-title {
+        font-size: 0.75rem;
+    }
+
+    .category-title {
+        font-size: 0.9rem;
+    }
+
+    .quick-link {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .search-input, .search-btn {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.8rem;
+    }
+}

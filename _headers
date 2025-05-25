@@ -1,0 +1,46 @@
+# Cloudflare Pages Headers Configuration
+
+# Global security headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Public directory pages
+/public/*
+  Cache-Control: public, max-age=3600
+  Content-Type: text/html; charset=utf-8
+
+# API路径的CORS配置
+/api/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+  Access-Control-Max-Age: 86400
+  Content-Type: application/json
+
+# 静态资源缓存
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# CSS文件
+/assets/css/*
+  Content-Type: text/css; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+# JavaScript文件
+/assets/js/*
+  Content-Type: application/javascript; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML页面缓存 (根级重定向)
+/*.html
+  Cache-Control: public, max-age=3600
+  Content-Type: text/html; charset=utf-8
+
+# 根目录
+/
+  Cache-Control: public, max-age=3600
